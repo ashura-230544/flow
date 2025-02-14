@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Flower</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let angle = 0;
+        let stemHeight = 0;
+        let opacity = 0;
+        let colors = ["white"];
+
+        function setup() {
+            createCanvas(400, 500);
+            angleMode(DEGREES);
+            frameRate(30);
+        }
+
+        function draw() {
+            background(0);
+            translate(width / 2, height / 3);
+
+            // Animate flower petals rotation
+            for (let i = 0; i < 8; i++) {
+                push();
+                rotate(angle + i * 45);
+                fill(colors[i % colors.length]);
+                stroke(255);
+                strokeWeight(2);
+                ellipse(50, 0, 80, 30);
+                pop();
+            }
+
+            // Draw center of the flower
+            fill("yellow");
+            noStroke();
+            ellipse(0, 0, 50, 50);
+
+            // Animate stem growing
+            stroke("green");
+            strokeWeight(8);
+            line(0, 25, 0, min(stemHeight, 200));
+
+            // Animate leaves appearing
+            if (stemHeight > 80) {
+                fill("lime");
+                noStroke();
+                ellipse(-20, min(stemHeight - 100, 100), 50, 20);
+                ellipse(20, min(stemHeight - 50, 150), 50, 20);
+            }
+
+            // Animate text fading in
+            fill(255, 255, 255, opacity);
+            noStroke();
+            textSize(24);
+            textAlign(CENTER);
+            text("❤️ Happy Valentine's Day , M'lady ❤️", 0, 250);
+
+            // Update animations
+            angle += 1;
+            if (stemHeight < 200) stemHeight += 2;
+            if (opacity < 255 && stemHeight >= 200) opacity += 5;
+        }
+    </script>
+</body>
+</html>
